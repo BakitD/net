@@ -5,6 +5,7 @@ import (
 	"os"
 	"fmt"
 	"net"
+	"strconv"
 )
 
 
@@ -28,12 +29,12 @@ func print_message(message []byte, n_bytes int) {
 }
 
 
-func format_address(port string) string {
-	return ":" + port
+func format_address(port int) string {
+	return ":" + strconv.Itoa(port)
 }
 
 
-func start(port string) {
+func start(port int, filedir string) {
 	var buffer []byte = make([]byte, BUFFER_SIZE)
 
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", format_address(port))

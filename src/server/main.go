@@ -2,24 +2,16 @@ package main
 
 
 import (
-	"os"
 	"fmt"
-)
-
-const (
-	DEFAULT_PORT = "9999"
+	"flag"
 )
 
 
 func main() {
-	var port string
+	port := flag.Int("port", DEFAULT_PORT, "")
+	filedir := flag.String("filedir", DEFAULT_DIRECTORY, "")
+	flag.Parse()
 
-	if len(os.Args) > 1 {
-		port = os.Args[1]
-	} else {
-		port = DEFAULT_PORT
-	}
-
-	fmt.Println("Starting at port ", port)
-	start(port)
+	fmt.Println("Starting server at port", *port)
+	start(*port, *filedir)
 }

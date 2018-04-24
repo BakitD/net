@@ -2,31 +2,13 @@ package main
 
 
 import (
+	"io"
 	"os"
 	"fmt"
 	"net"
+	"bufio"
 	"strconv"
 )
-
-
-const (
-	ERROR_MESSAGE = "Error %s"
-	ERROR_CODE_AT_EXIT = 1
-	BUFFER_SIZE = 256
-)
-
-
-func handle_error(e error) {
-	if e != nil {
-		fmt.Fprintf(os.Stderr, ERROR_MESSAGE, e.Error())
-		os.Exit(ERROR_CODE_AT_EXIT)
-	}
-}
-
-
-func print_message(message []byte, n_bytes int) {
-	fmt.Println("Received from client: ", string(message[:n_bytes]))
-}
 
 
 func format_address(port int) string {
@@ -34,9 +16,57 @@ func format_address(port int) string {
 }
 
 
-func start(port int, filedir string) {
+func send_file(filename string, conn net.Conn) int {
+	var bytes_sent int = 0
 	var buffer []byte = make([]byte, BUFFER_SIZE)
 
+	f, err := os.Open(filename)
+	if err != nil {
+		print_error(err)
+		return bytes_sent
+	}
+
+	reader := bufio.NewReaderSize(f, BUFFER_SIZE)
+	for {
+		bytes_read, err := reader.Read(buffer)
+		if err != nil && err != io.EOF {
+			print_error(err)
+			break
+		}
+		if bytes_read > 0 {
+			n, err := conn.Write(buffer[:bytes_read])
+			if err != nil {
+				print_error(err)
+				break
+			}
+			bytes_sent += n
+		} else {
+			break
+		}
+	}
+	return bytes_sent
+}
+
+func handle_connection(conn net.Conn) int {
+		var buffer []byte = make([]byte, BUFFER_READ_SIZE)
+		var bytes_sent int = 0
+
+		defer conn.Close()
+
+		bytes_read, err := conn.Read(buffer)
+		if err != nil {
+			print_error(err) 
+			return bytes_sent
+		}
+		if bytes_read == 0 {
+			print_message("Received filename with zero length")
+			return bytes_sent
+		}
+		return send_file(string(buffer[:bytes_read]), conn)
+}
+
+
+func start(port int, filedir string) {
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", format_address(port))
 	handle_error(err)
 	listener, err := net.ListenTCP("tcp", tcpAddr)
@@ -46,11 +76,9 @@ func start(port int, filedir string) {
 		conn, err := listener.Accept()
 		if err != nil {
 			continue
+		} else {
+			sent := handle_connection(conn)
+			print_message(fmt.Sprintf("%d bytes were sent.", sent))
 		}
-		n_bytes, err := conn.Read(buffer)
-		if err == nil {
-			print_message(buffer, n_bytes)
-		}
-		conn.Close()
 	}
 }

@@ -23,12 +23,20 @@ func connect(address string) (conn *net.TCPConn, err error) {
 }
 
 func start(data string) {
+	var buffer []byte = make([]byte, 512)
 
 	for _, server := range SERVERS {
 		conn, err := connect(server)
 		if err == nil {
 			conn.Write([]byte(data))
-			conn.Close()
+			for {
+				bytes_read, _ := conn.Read(buffer)
+				if bytes_read == 0 {
+					break
+				} else {
+					fmt.Println(string(buffer[:bytes_read]))
+				}
+			}
 		} else {
 			fmt.Println(err)
 		}

@@ -7,11 +7,6 @@ import (
 )
 
 
-const (
-	MESSAGE_TO_SERVER = "This message should be sent to server!"
-)
-
-
 var SERVERS []string = []string{":9999"}
 
 
@@ -27,20 +22,16 @@ func connect(address string) (conn *net.TCPConn, err error) {
 	return conn, nil
 }
 
-func Start(data []byte) {
+func start(data string) {
 
 	for _, server := range SERVERS {
 		conn, err := connect(server)
 		if err == nil {
-			conn.Write(data)
+			conn.Write([]byte(data))
 			conn.Close()
 		} else {
 			fmt.Println(err)
 		}
 
 	}
-}
-
-func main() {
-	Start([]byte(MESSAGE_TO_SERVER))
 }

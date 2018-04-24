@@ -1,20 +1,17 @@
 package main
 
-
 import (
-	"io"
-	"os"
-	"fmt"
-	"net"
 	"bufio"
+	"fmt"
+	"io"
+	"net"
+	"os"
 	"strconv"
 )
-
 
 func format_address(port int) string {
 	return ":" + strconv.Itoa(port)
 }
-
 
 func send_file(filename string, conn net.Conn) int {
 	var bytes_sent int = 0
@@ -48,23 +45,22 @@ func send_file(filename string, conn net.Conn) int {
 }
 
 func handle_connection(conn net.Conn) int {
-		var buffer []byte = make([]byte, BUFFER_READ_SIZE)
-		var bytes_sent int = 0
+	var buffer []byte = make([]byte, BUFFER_READ_SIZE)
+	var bytes_sent int = 0
 
-		defer conn.Close()
+	defer conn.Close()
 
-		bytes_read, err := conn.Read(buffer)
-		if err != nil {
-			print_error(err) 
-			return bytes_sent
-		}
-		if bytes_read == 0 {
-			print_message("Received filename with zero length")
-			return bytes_sent
-		}
-		return send_file(string(buffer[:bytes_read]), conn)
+	bytes_read, err := conn.Read(buffer)
+	if err != nil {
+		print_error(err)
+		return bytes_sent
+	}
+	if bytes_read == 0 {
+		print_message("Received filename with zero length")
+		return bytes_sent
+	}
+	return send_file(string(buffer[:bytes_read]), conn)
 }
-
 
 func start(port int, filedir string) {
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", format_address(port))

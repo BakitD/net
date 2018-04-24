@@ -1,11 +1,9 @@
 package main
 
-
 import (
-	"os"
 	"fmt"
+	"os"
 )
-
 
 func handle_error(e error) {
 	if e != nil {
@@ -14,13 +12,11 @@ func handle_error(e error) {
 	}
 }
 
-
 func print_error(e error) {
 	if e != nil {
 		fmt.Fprintf(os.Stderr, ERROR_MESSAGE, e.Error())
 	}
 }
-
 
 func print_message(message string) {
 	fmt.Println(message)

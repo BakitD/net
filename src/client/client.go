@@ -1,10 +1,10 @@
 package main
 
 import (
-	"io"
-	"os"
 	"fmt"
+	"io"
 	"net"
+	"os"
 	"path/filepath"
 )
 
@@ -56,7 +56,6 @@ func receive_file(filename string, conn net.Conn) (int, error) {
 	return bytes_written, nil
 }
 
-
 func start(filename string) {
 	for _, server := range SERVERS {
 		conn, err := connect(server)
@@ -76,6 +75,5 @@ func start(filename string) {
 		} else {
 			print_error(err)
 		}
-
 	}
 }

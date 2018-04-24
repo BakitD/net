@@ -1,11 +1,9 @@
 package main
 
-
 import (
-	"fmt"
 	"flag"
+	"fmt"
 )
-
 
 func main() {
 	port := flag.Int("port", DEFAULT_PORT, "")

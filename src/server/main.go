@@ -4,7 +4,6 @@ package main
 import (
 	"os"
 	"fmt"
-	"server"
 )
 
 const (
@@ -22,5 +21,5 @@ func main() {
 	}
 
 	fmt.Println("Starting at port ", port)
-	server.Start(port)
+	start(port)
 }

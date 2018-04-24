@@ -1,4 +1,5 @@
-package server
+package main
+
 
 import (
 	"os"
@@ -32,7 +33,7 @@ func format_address(port string) string {
 }
 
 
-func Start(port string) {
+func start(port string) {
 	var buffer []byte = make([]byte, BUFFER_SIZE)
 
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", format_address(port))

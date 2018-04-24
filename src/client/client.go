@@ -1,14 +1,11 @@
 package main
 
-
 import (
-	"net"
 	"fmt"
+	"net"
 )
 
-
 var SERVERS []string = []string{":9999"}
-
 
 func connect(address string) (conn *net.TCPConn, err error) {
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", address)

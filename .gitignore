@@ -16,5 +16,5 @@ files/
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-sstart
-cstart
+cli
+srv

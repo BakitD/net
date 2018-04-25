@@ -4,6 +4,14 @@
 ## Simple TCP client and TCP server
 
 
+### Installation
+
+> `git clone git@github.com:BakitD/net.git`
+
+> `cd net`
+
+> `make`
+
 
 
 #### TODO

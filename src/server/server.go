@@ -7,6 +7,8 @@ import (
 	"net"
 	"os"
 	"strconv"
+
+	"../utils"
 )
 
 func format_address(port int) string {
@@ -19,7 +21,7 @@ func send_file(filename string, conn net.Conn) int {
 
 	f, err := os.Open(filename)
 	if err != nil {
-		print_error(err)
+		utils.Print_error(err)
 		return bytes_sent
 	}
 
@@ -27,13 +29,13 @@ func send_file(filename string, conn net.Conn) int {
 	for {
 		bytes_read, err := reader.Read(buffer)
 		if err != nil && err != io.EOF {
-			print_error(err)
+			utils.Print_error(err)
 			break
 		}
 		if bytes_read > 0 {
 			n, err := conn.Write(buffer[:bytes_read])
 			if err != nil {
-				print_error(err)
+				utils.Print_error(err)
 				break
 			}
 			bytes_sent += n
@@ -52,11 +54,11 @@ func handle_connection(conn net.Conn) int {
 
 	bytes_read, err := conn.Read(buffer)
 	if err != nil {
-		print_error(err)
+		utils.Print_error(err)
 		return bytes_sent
 	}
 	if bytes_read == 0 {
-		print_message("Received filename with zero length")
+		utils.Print_message("Received filename with zero length")
 		return bytes_sent
 	}
 	return send_file(string(buffer[:bytes_read]), conn)
@@ -64,9 +66,9 @@ func handle_connection(conn net.Conn) int {
 
 func start(port int, filedir string) {
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", format_address(port))
-	handle_error(err)
+	utils.Handle_error(err)
 	listener, err := net.ListenTCP("tcp", tcpAddr)
-	handle_error(err)
+	utils.Handle_error(err)
 
 	for {
 		conn, err := listener.Accept()
@@ -74,7 +76,7 @@ func start(port int, filedir string) {
 			continue
 		} else {
 			sent := handle_connection(conn)
-			print_message(fmt.Sprintf("%d bytes were sent.", sent))
+			utils.Print_message(fmt.Sprintf("%d bytes were sent.", sent))
 		}
 	}
 }

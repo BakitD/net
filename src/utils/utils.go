@@ -1,23 +1,23 @@
-package main
+package utils
 
 import (
 	"fmt"
 	"os"
 )
 
-func handle_error(e error) {
+func Handle_error(e error) {
 	if e != nil {
 		fmt.Fprintf(os.Stderr, ERROR_MESSAGE, e.Error())
 		os.Exit(ERROR_CODE_AT_EXIT)
 	}
 }
 
-func print_error(e error) {
+func Print_error(e error) {
 	if e != nil {
 		fmt.Fprintf(os.Stderr, ERROR_MESSAGE, e.Error())
 	}
 }
 
-func print_message(message string) {
+func Print_message(message string) {
 	fmt.Println(message)
 }

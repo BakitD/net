@@ -12,6 +12,20 @@
 
 > `make`
 
+Run server (don't change port)
+
+> `./srv`
+
+Files that client could download is located in /files/output
+directory.
+Downloaded files are stored in /files/input.
+
+To download file use client with next comand
+
+> `./cli FILENAME`
+
+FILENAME - is the name of file.
+
 
 
 #### TODO

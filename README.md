@@ -6,13 +6,16 @@
 Simple TCP server and client for file transfer in local network
 
 
-### Installation & Run
+### Installation
 
 > `git clone git@github.com:BakitD/net.git`
 
 > `cd net`
 
 > `make`
+
+
+### Usage
 
 Run server (-port is optional, default value is 9999)
 
@@ -29,9 +32,6 @@ To get file use client with next comand
 
 SERVER_ADDRESS - server IPv4 address with port in next format ip:port (example 172.10.20.30:9999)
 FILES - file names divided with whitespaces
-
-
-
 
 
 #### TODO

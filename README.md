@@ -36,3 +36,6 @@ FILENAME - is the name of file.
  - add application layer protocol
  - change schema of server and client interaction
  - format code
+
+ - server does not know how many bytes client could receive at once,
+ 	therefore protocol should control this value

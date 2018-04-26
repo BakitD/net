@@ -5,8 +5,10 @@ import (
 )
 
 func main() {
-	args := os.Args[1:]
+	source := os.Args[1]
+	args := os.Args[2:]
+
 	for _, filename := range args {
-		start(filename)
+		start(source, filename)
 	}
 }

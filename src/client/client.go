@@ -10,9 +10,6 @@ import (
 	"../utils"
 )
 
-var SERVERS []string = []string{":9999"}
-
-
 func default_dir() string {
 	cwd, _ := os.Getwd()
 	abspath, _ := filepath.Abs(filepath.Join(cwd, DEFAULT_SAVE_DIRECTORY))
@@ -65,24 +62,21 @@ func receive_file(filename string, conn net.Conn) (int, error) {
 	return bytes_written, nil
 }
 
-func start(filename string) {
-	for _, server := range SERVERS {
-		conn, err := connect(server)
-		if err == nil {
-			_, err = find_file(filename, conn)
+func start(source, filename string) {
+	conn, err := connect(source)
+	if err == nil {
+		_, err = find_file(filename, conn)
+		if err != nil {
+			utils.Print_error(err)
+		} else {
+			bytes_received, err := receive_file(filename, conn)
 			if err != nil {
 				utils.Print_error(err)
 			} else {
-				bytes_received, err := receive_file(filename, conn)
-				if err != nil {
-					utils.Print_error(err)
-				} else {
-					utils.Print_message(fmt.Sprintf("%d bytes were received", bytes_received))
-					break
-				}
+				utils.Print_message(fmt.Sprintf("%d bytes were received", bytes_received))
 			}
-		} else {
-			utils.Print_error(err)
 		}
+	} else {
+		utils.Print_error(err)
 	}
 }

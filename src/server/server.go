@@ -6,8 +6,8 @@ import (
 	"io"
 	"net"
 	"os"
-	"strconv"
 	"path/filepath"
+	"strconv"
 
 	"../utils"
 )
@@ -16,19 +16,16 @@ func format_address(port int) string {
 	return ":" + strconv.Itoa(port)
 }
 
-
 func default_dir() string {
 	cwd, _ := os.Getwd()
 	abspath, _ := filepath.Abs(filepath.Join(cwd, DEFAULT_DIRECTORY))
 	return abspath
 }
 
-
 func pick_file(filename string) string {
 	path, _ := filepath.Abs(filepath.Join(default_dir(), filename))
 	return path
 }
-
 
 func send_file(filename string, conn net.Conn) int {
 	var bytes_sent int = 0
@@ -62,7 +59,7 @@ func send_file(filename string, conn net.Conn) int {
 }
 
 func handle_connection(conn net.Conn) int {
-	var buffer []byte = make([]byte, BUFFER_READ_SIZE)
+	var buffer []byte = make([]byte, FILENAME_BUFFER_MAX_LENGTH)
 	var bytes_sent int = 0
 
 	defer conn.Close()

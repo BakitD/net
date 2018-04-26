@@ -14,9 +14,7 @@ CLIENT_NAME=cli
 
 
 build:
-
 	$(MKDIR) $(SRC_ROOT)/files/input
 	$(MKDIR) $(SRC_ROOT)/files/output
-
 	$(GOBUILD) -o $(SERVER_NAME) $(SERVER_SRC)
 	$(GOBUILD) -o $(CLIENT_NAME) $(CLIENT_SRC)

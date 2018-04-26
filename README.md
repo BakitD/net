@@ -3,8 +3,10 @@
 
 ## Simple TCP client and TCP server
 
+Simple TCP server and client for file transfer in local network
 
-### Installation
+
+### Installation & Run
 
 > `git clone git@github.com:BakitD/net.git`
 
@@ -12,19 +14,23 @@
 
 > `make`
 
-Run server (don't change port)
+Run server (-port is optional, default value is 9999)
 
-> `./srv`
+> `./srv -port=PORT`
 
-Files that client could download is located in /files/output
-directory.
-Downloaded files are stored in /files/input.
 
-To download file use client with next comand
+Directory /files/output includes files that client can
+download. They are stored at servers side.
+After download all files will be stored in /files/input directory.
 
-> `./cli FILENAME`
+To get file use client with next comand
 
-FILENAME - is the name of file.
+> `./cli SERVER_ADDRESS FILES`
+
+SERVER_ADDRESS - server IPv4 address with port in next format ip:port (example 172.10.20.30:9999)
+FILES - file names divided with whitespaces
+
+
 
 
 

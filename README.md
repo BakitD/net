@@ -37,16 +37,3 @@ To get file use client with next comand
 
 SERVER_ADDRESS - server IPv4 address with port in next format ip:port (example 172.10.20.30:9999)
 FILES - file names divided with whitespaces
-
-
-#### TODO
-
- - logging (change print_error, handle_error, print_message)
- - add multicasting for servers
- - add directory where files will be located for search
- - add application layer protocol
- - change schema of server and client interaction
- - format code
-
- - server does not know how many bytes client could receive at once,
- 	therefore protocol should control this value

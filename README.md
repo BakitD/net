@@ -12,8 +12,13 @@ Simple TCP server and client for file transfer in local network
 
 > `cd net`
 
+> `export GOPATH=($pwd)`
+
 > `make`
 
+To remove all object files
+
+> `make clean`
 
 ### Usage
 

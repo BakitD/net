@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"client"
 )
 
 func main() {
@@ -9,6 +10,6 @@ func main() {
 	args := os.Args[2:]
 
 	for _, filename := range args {
-		start(source, filename)
+		client.Start(source, filename)
 	}
 }

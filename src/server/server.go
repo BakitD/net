@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"bufio"
@@ -9,21 +9,21 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"../utils"
+	"utils"
 )
 
 func format_address(port int) string {
 	return ":" + strconv.Itoa(port)
 }
 
-func default_dir() string {
+func Default_dir() string {
 	cwd, _ := os.Getwd()
 	abspath, _ := filepath.Abs(filepath.Join(cwd, DEFAULT_DIRECTORY))
 	return abspath
 }
 
 func pick_file(filename string) string {
-	path, _ := filepath.Abs(filepath.Join(default_dir(), filename))
+	path, _ := filepath.Abs(filepath.Join(Default_dir(), filename))
 	return path
 }
 
@@ -76,7 +76,7 @@ func handle_connection(conn net.Conn) int {
 	return send_file(string(buffer[:bytes_read]), conn)
 }
 
-func start(port int, filedir string) {
+func Start(port int, filedir string) {
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", format_address(port))
 	utils.Handle_error(err)
 	listener, err := net.ListenTCP("tcp", tcpAddr)

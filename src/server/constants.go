@@ -1,4 +1,4 @@
-package main
+package server
 
 const (
 	BUFFER_SIZE                = 1024

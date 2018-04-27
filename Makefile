@@ -3,18 +3,17 @@ GOBUILD=$(GOCMD) build
 MKDIR=mkdir -p
 
 SRC_ROOT=$(shell pwd)
-SERVER_SRC=$(SRC_ROOT)/src/server/*.go
-CLIENT_SRC=$(SRC_ROOT)/src/client/*.go
+SERVER_SRC=src/server/main/main.go
+CLIENT_SRC=src/client/main/main.go
 
 SERVER_NAME=srv
 CLIENT_NAME=cli
 
-
 build:
 	$(MKDIR) $(SRC_ROOT)/files/input
 	$(MKDIR) $(SRC_ROOT)/files/output
-	$(GOBUILD) -o $(SERVER_NAME) $(SERVER_SRC)
-	$(GOBUILD) -o $(CLIENT_NAME) $(CLIENT_SRC)
+	$(GOBUILD) -o $(SERVER_NAME) ${GOPATH}/$(SERVER_SRC)
+	$(GOBUILD) -o $(CLIENT_NAME) ${GOPATH}/$(CLIENT_SRC)
 
 clean:
 	@[ -f ./$(SERVER_NAME) ] && rm ./$(SERVER_NAME) || true

@@ -1,4 +1,4 @@
-package main
+package client
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"../utils"
+	"utils"
 )
 
 func default_dir() string {
@@ -62,7 +62,7 @@ func receive_file(filename string, conn net.Conn) (int, error) {
 	return bytes_written, nil
 }
 
-func start(source, filename string) {
+func Start(source, filename string) {
 	conn, err := connect(source)
 	if err == nil {
 		_, err = find_file(filename, conn)

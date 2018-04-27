@@ -12,7 +12,9 @@ Simple TCP server and client for file transfer in local network
 
 > `cd net`
 
-> `export GOPATH=($pwd)`
+> `export GOPATH=NET_DIR`
+
+where NET_DIR is absolute path to net directory
 
 > `make`
 

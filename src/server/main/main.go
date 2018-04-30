@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
 	"server"
 )
 
@@ -11,6 +11,6 @@ func main() {
 	filedir := flag.String("filedir", server.Default_dir(), "")
 	flag.Parse()
 
-	fmt.Println("Starting server at port", *port)
+	log.Print("Starting server at port ", *port)
 	server.Start(*port, *filedir)
 }

@@ -2,14 +2,12 @@ package server
 
 import (
 	"bufio"
-	"fmt"
 	"io"
+	"log"
 	"net"
 	"os"
 	"path/filepath"
 	"strconv"
-
-	"utils"
 )
 
 func format_address(port int) string {
@@ -33,7 +31,7 @@ func send_file(filename string, conn net.Conn) int {
 
 	f, err := os.Open(pick_file(filename))
 	if err != nil {
-		utils.Print_error(err)
+		log.Print(err)
 		return bytes_sent
 	}
 
@@ -41,13 +39,13 @@ func send_file(filename string, conn net.Conn) int {
 	for {
 		bytes_read, err := reader.Read(buffer)
 		if err != nil && err != io.EOF {
-			utils.Print_error(err)
+			log.Print(err)
 			break
 		}
 		if bytes_read > 0 {
 			n, err := conn.Write(buffer[:bytes_read])
 			if err != nil {
-				utils.Print_error(err)
+				log.Print(err)
 				break
 			}
 			bytes_sent += n
@@ -66,11 +64,11 @@ func handle_connection(conn net.Conn) int {
 
 	bytes_read, err := conn.Read(buffer)
 	if err != nil {
-		utils.Print_error(err)
+		log.Print(err)
 		return bytes_sent
 	}
 	if bytes_read == 0 {
-		utils.Print_message("Received filename with zero length")
+		log.Print("Received filename with zero length")
 		return bytes_sent
 	}
 	return send_file(string(buffer[:bytes_read]), conn)
@@ -78,9 +76,13 @@ func handle_connection(conn net.Conn) int {
 
 func Start(port int, filedir string) {
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", format_address(port))
-	utils.Handle_error(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 	listener, err := net.ListenTCP("tcp", tcpAddr)
-	utils.Handle_error(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	for {
 		conn, err := listener.Accept()
@@ -88,7 +90,7 @@ func Start(port int, filedir string) {
 			continue
 		} else {
 			sent := handle_connection(conn)
-			utils.Print_message(fmt.Sprintf("%d bytes were sent.", sent))
+			log.Printf("%d bytes were sent.", sent)
 		}
 	}
 }

@@ -1,13 +1,11 @@
 package client
 
 import (
-	"fmt"
 	"io"
+	"log"
 	"net"
 	"os"
 	"path/filepath"
-
-	"utils"
 )
 
 func default_dir() string {
@@ -67,16 +65,16 @@ func Start(source, filename string) {
 	if err == nil {
 		_, err = find_file(filename, conn)
 		if err != nil {
-			utils.Print_error(err)
+			log.Print(err)
 		} else {
 			bytes_received, err := receive_file(filename, conn)
 			if err != nil {
-				utils.Print_error(err)
+				log.Print(err)
 			} else {
-				utils.Print_message(fmt.Sprintf("%d bytes were received", bytes_received))
+				log.Printf("%d bytes were received", bytes_received)
 			}
 		}
 	} else {
-		utils.Print_error(err)
+		log.Print(err)
 	}
 }
